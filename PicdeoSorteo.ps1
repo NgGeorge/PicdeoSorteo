@@ -36,7 +36,7 @@ function Get-ExtendedProperty {
     if ([string]::IsNullOrWhiteSpace($rawValue)) {
         return $null
     } else {
-        Write-Host "Datetime : " $rawValue
+        Write-Host "Datetime : " $rawValue " for $FilePath"
         return $rawValue
     }
 }
@@ -59,7 +59,6 @@ function Get-MediaDate {
         if ($dateTakenString) {
             # Declare a [DateTime] variable to store the parsed date
             if ([DateTime]::TryParse($dateTakenString, [ref] $parsedDate)) {
-                Write-Host "Hit"
                 return $parsedDate
             }
         }
@@ -70,7 +69,6 @@ function Get-MediaDate {
         $mediaCreatedString = $mediaCreatedString -replace '[\u200E\u200F]', ''
         if ($mediaCreatedString) {
             if ([DateTime]::TryParse($mediaCreatedString, [ref] $parsedDate)) {
-                Write-Host "Hit"
                 return $parsedDate
             }
         }
@@ -93,7 +91,6 @@ $filesWithDate = foreach ($f in $files) {
 
 # Sort by that date
 $sorted = $filesWithDate | Sort-Object SortDate
-Write-Host $sorted
 
 # Now rename sequentially: 0000, 0001, 0002, etc.
 # Adjust the format string ("{0:0000}") to fit your needs (e.g., 4-digit padding).
